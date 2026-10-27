@@ -1,5 +1,6 @@
 #include "ds_string.h"
 #include "input/handlers.h"
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -69,13 +70,17 @@ ssize_t get_cmd_noncannonical(ds_string *cmd) {
 }
 
 int delete_from_userin(int num_chars) {
-  while (num_chars-- > 0) {
-    if (write(STDOUT_FILENO, "\033[D \033[D", 7) == -1) {
-      perror("Error in write() operation");
-      return -1;
-    }
+  char to_write[num_chars * 7];
+
+  for (int i = 0; i < num_chars; i++) {
+    char *addr = to_write + i * 7;
+    memcpy(addr, "\033[D \033[D", 7);
   }
 
+  if (write(STDOUT_FILENO, to_write, sizeof(to_write)) == -1) {
+    perror("Error in write() operation");
+    return -1;
+  }
   return 0;
 }
 
