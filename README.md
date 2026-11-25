@@ -15,9 +15,6 @@ A minimal Unix shell written in C (`gnu23`), built on POSIX APIs.
 - **Tab completion**: completes file paths in the current directory by longest prefix match.
 - **Signal handling**: `Ctrl+C` clears the current line, while child processes keep the default `SIGINT` behavior. `Ctrl+D` exits the shell.
 
-> [!NOTE]
-> Pipes, command chaining, and variable expansion aren't supported yet. See the [Roadmap](#roadmap).
-
 ## Project Structure
 ```
 src/
@@ -49,8 +46,6 @@ cd shell
 make
 ./shell
 ```
-> [!TIP]
-> On the first build, `make` invokes cmake to fetch libds-c into `build/_deps/`, so you'll need an internet connection.
 
 Alternatively, build entirely with CMake:
 ```bash
