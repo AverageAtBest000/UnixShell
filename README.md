@@ -1,5 +1,11 @@
 # Shell
 
+![Language](https://img.shields.io/badge/language-C-blue)
+![Standard](https://img.shields.io/badge/standard-gnu23-informational)
+![Build](https://img.shields.io/badge/build-CMake-064F8C?logo=cmake)
+![Platform](https://img.shields.io/badge/platform-Linux-lightgrey?logo=linux)
+![License](https://img.shields.io/badge/license-GPL--3.0-green)
+
 A minimal Unix shell written in C (`gnu23`), built on POSIX APIs.
 
 ## Features
@@ -8,6 +14,9 @@ A minimal Unix shell written in C (`gnu23`), built on POSIX APIs.
 - **Built-ins**: `cd` No argument changes to `$HOME`.
 - **Tab completion**: completes file paths in the current directory by longest prefix match.
 - **Signal handling**: `Ctrl+C` clears the current line, while child processes keep the default `SIGINT` behavior. `Ctrl+D` exits the shell.
+
+> [!NOTE]
+> Pipes, command chaining, and variable expansion aren't supported yet. See the [Roadmap](#roadmap).
 
 ## Project Structure
 ```
@@ -40,7 +49,10 @@ cd shell
 make
 ./shell
 ```
-On the first build, `make` invokes cmake to fetch libds-c into `build/_deps/`. Alternatively, build entirely with CMake:
+> [!TIP]
+> On the first build, `make` invokes cmake to fetch libds-c into `build/_deps/`, so you'll need an internet connection.
+
+Alternatively, build entirely with CMake:
 ```bash
 cmake -S . -B build
 cmake --build build
