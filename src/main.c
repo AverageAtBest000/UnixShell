@@ -24,6 +24,8 @@ int main(void) {
     return -1;
   }
 
+  signal(SIGINT, SIG_IGN);
+
   // char *cmd = NULL;
   ds_string cmd;
 
@@ -59,7 +61,9 @@ int main(void) {
     bool handled = handleBuiltins(argv, argc);
 
     if (!handled) {
+      set_cannonical_terminal(&old_attr);
       execute(&argv);
+      set_raw_terminal(&old_attr, &new_attr);
     }
 
     reset(&argc, &cmd, &argv);
@@ -82,8 +86,8 @@ static int set_raw_terminal(struct termios *old_attr,
 
   *new_attr = *old_attr;
   new_attr->c_lflag &= ~ICANON;
-
   new_attr->c_lflag &= ~ECHO;
+  new_attr->c_lflag &= ~ISIG;
 
   if (tcsetattr(STDIN_FILENO, TCSANOW, new_attr) != 0) {
     perror("Fail in tcsetattr(). Could not go to cannonical mode");

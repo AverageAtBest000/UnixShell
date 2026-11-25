@@ -63,6 +63,11 @@ ssize_t get_cmd_noncannonical(ds_string *cmd) {
       continue;
     }
 
+    if (ch == 3) {
+      handle_ctrlc(cmd);
+      continue;
+    }
+
     write(STDOUT_FILENO, &ch, 1);
     ds_string_append_char(cmd, ch);
   }

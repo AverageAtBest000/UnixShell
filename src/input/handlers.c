@@ -1,7 +1,8 @@
+#include "input/handlers.h"
 #include "ds_string.h"
 #include "input/completion.h"
 #include "input/input.h"
-#include "input/handlers.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
@@ -38,6 +39,13 @@ int handle_tab(ds_string *cmd) {
   size_t to_write = strlen(filepath);
   write(STDOUT_FILENO, filepath, to_write);
   free(filepath);
+
+  return 0;
+}
+
+int handle_ctrlc(ds_string *cmd) {
+  write(STDOUT_FILENO, "^C\n❯ ", strlen("^C\n❯ "));
+  ds_string_clear(cmd);
 
   return 0;
 }
