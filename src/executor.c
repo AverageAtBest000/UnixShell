@@ -24,8 +24,10 @@ void execute(char ***argv) {
       _exit(1);
       return;
     }
-    write(STDOUT_FILENO, "\n", 1);
   } else {
-    waitpid(pid, NULL, 0);
+    int val;
+    waitpid(pid, &val, 0);
+    if (WIFSIGNALED(val))
+      write(STDOUT_FILENO, "\n", 1);
   }
 }

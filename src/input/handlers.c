@@ -49,3 +49,11 @@ int handle_ctrlc(ds_string *cmd) {
 
   return 0;
 }
+
+int handle_ctrld(ds_string *cmd) {
+  ds_string_clear(cmd);
+  if (ds_string_append_c_str(cmd, "exit") != DS_STATUS_OK)
+    return -1;
+
+  return 0;
+}
