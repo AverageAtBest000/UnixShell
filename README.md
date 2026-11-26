@@ -19,7 +19,8 @@ A minimal Unix shell written in C (`gnu23`), built on POSIX APIs.
 ```
 src/
 ├── main.c          # REPL loop, terminal setup/teardown
-├── parser.c        # tokenizer
+├── lexer.c         # tokenizer
+├── parser.c        # parser
 ├── executor.c      # fork/exec/wait
 ├── builtins.c      # built-in commands
 └── input/

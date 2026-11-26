@@ -2,8 +2,8 @@ CC = clang
 LIBDS_INCLUDE = build/_deps/libds-c-src/include
 FLAGS = -std=gnu23 -Wextra -Wall -Iinclude -I$(LIBDS_INCLUDE)
 
-shell: main.o builtins.o executor.o input.o parser.o completion.o handlers.o
-	$(CC) main.o builtins.o executor.o input.o parser.o completion.o handlers.o -o shell
+shell: main.o builtins.o executor.o input.o lexer.o parser.o completion.o handlers.o
+	$(CC) main.o builtins.o executor.o input.o lexer.o parser.o completion.o handlers.o -o shell
 
 main.o: src/main.c include/builtins.h include/executor.h include/input/input.h include/parser.h
 	$(CC) $(FLAGS) -c src/main.c
@@ -17,6 +17,9 @@ executor.o: src/executor.c include/executor.h
 input.o: src/input/input.c include/input/input.h include/input/handlers.h
 	$(CC) $(FLAGS) -c src/input/input.c
 
+lexer.o: src/lexer.c include/lexer.h
+	$(CC) $(FLAGS) -c src/lexer.c
+
 parser.o: src/parser.c include/parser.h
 	$(CC) $(FLAGS) -c src/parser.c
 
@@ -26,7 +29,7 @@ completion.o: src/input/completion.c include/input/completion.h include/parser.h
 handlers.o: src/input/handlers.c include/input/handlers.h include/input/input.h include/input/completion.h
 	$(CC) $(FLAGS) -c src/input/handlers.c
 
-main.o input.o parser.o completion.o handlers.o: $(LIBDS_INCLUDE)/ds_string.h
+main.o input.o lexer.o parser.o completion.o handlers.o: $(LIBDS_INCLUDE)/ds_string.h
 
 $(LIBDS_INCLUDE)/ds_string.h:
 	cmake -S . -B build
